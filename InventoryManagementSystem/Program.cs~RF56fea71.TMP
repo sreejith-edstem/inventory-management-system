@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InventoryManagementSystem
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            InventoryManager inventoryManager = new InventoryManager();
+            List<Product> products = inventoryManager.GetProducts();
+            InventoryReporter inventoryReporter = new InventoryReporter(products);
+            AlertManager alertManager = new AlertManager(products);
+            while (true)
+            {
+                Console.WriteLine("=== Inventory Management System ===");
+                Console.WriteLine("1. View Inventory");
+                Console.WriteLine("2. Add Product");
+                Console.WriteLine("3. Update Stock");
+                Console.WriteLine("4. Generate Reports");
+                Console.WriteLine("5. View Alerts");
+                Console.WriteLine("6. Exit");
+                Console.WriteLine("Enter choice (1-6): ");
+                int option = int.Parse(Console.ReadLine());
+                switch (option)
+                {
+                    case 1:
+                        
+                }
+            }
+        }
+
+        static void ViewInventory(InventoryReporter inventoryReporter, AlertManager alertManager, InventoryManager inventoryManager)
+        {
+            inventoryReporter.ListAllProducts();
+            alertManager.CheckLowStock();
+            Console.WriteLine($"Total Inventory Value: {inventoryManager.CalculateTotalInventoryValue():C}");
+            Console.Write("Enter product ID to view details or 'M' for menu: ");
+            String input = Console.ReadLine();
+            if (input.ToUpper( )== "M")
+            {
+                return;
+            }
+            else
+            {
+                var product = inventoryManager.GetProducts().FirstOrDefault(p => p.ProductId == input);
+                if (product != null)
+                {
+                    Console.WriteLine($"Product Details: {product.ProductId} - {product.Name} - {product.Quantity} - {product.Price:}");
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+D:\C#\inventory\InventoryManagementSystem\bin\Debug\InventoryManagementSystem.exe.config
+D:\C#\inventory\InventoryManagementSystem\bin\Debug\InventoryManagementSystem.exe
+D:\C#\inventory\InventoryManagementSystem\bin\Debug\InventoryManagementSystem.pdb
+D:\C#\inventory\InventoryManagementSystem\obj\Debug\InventoryManagementSystem.csproj.AssemblyReference.cache
+D:\C#\inventory\InventoryManagementSystem\obj\Debug\InventoryManagementSystem.csproj.CoreCompileInputs.cache
+D:\C#\inventory\InventoryManagementSystem\obj\Debug\InventoryManagementSystem.exe
+D:\C#\inventory\InventoryManagementSystem\obj\Debug\InventoryManagementSystem.pdb
