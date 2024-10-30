@@ -9,9 +9,10 @@ namespace InventoryManagementSystem
     internal class InventoryManager
     {
         private List<Product> products = new List<Product>();
+        private ProductValidator validator = new ProductValidator();
         public void AddProduct(Product product)
         {
-            if (ValidateProduct(product))
+            if (validator.ValidateProduct(product))
             {
                 products.Add(product);
                 Console.WriteLine("Product added successfully.");
@@ -20,7 +21,7 @@ namespace InventoryManagementSystem
         public void UpdateProduct(string productId, Product updatedProduct)
         {
             var product = products.FirstOrDefault(p => p.ProductId == productId);
-            if (product != null && ValidateProduct(updatedProduct))
+            if (product != null && validator.ValidateProduct(updatedProduct))
             {
                 product.Name = updatedProduct.Name;
                 product.Quantity = updatedProduct.Quantity;
@@ -34,7 +35,6 @@ namespace InventoryManagementSystem
                 Console.WriteLine("Product not found or invalid data.");
             }
         }
-        
         public void RemoveProduct(string productId)
         {
             var product = products.FirstOrDefault(p => p.ProductId == productId);
@@ -48,34 +48,36 @@ namespace InventoryManagementSystem
                 Console.WriteLine("Product not found.");
             }
         }
-        private bool ValidateProduct(Product product)
+        public void IncreaseStock(string productId, int amount)
         {
-            if (string.IsNullOrEmpty(product.ProductId) || !System.Text.RegularExpressions.Regex.IsMatch(product.ProductId, @"^[A-Z]{3}-\d{3}$"))
+            var product = products.FirstOrDefault(p => p.ProductId == productId);
+            if (product != null && amount > 0)
             {
-                Console.WriteLine("Invalid ProductId format.");
-                return false;
+                product.Quantity += amount;
+                product.LastRestocked = DateTime.Now;
+                Console.WriteLine("Stock increased successfully.");
             }
-            if (string.IsNullOrEmpty(product.Name) || product.Name.Length < 3 || product.Name.Length > 50)
+            else
             {
-                Console.WriteLine("Invalid Name length.");
-                return false;
+                Console.WriteLine("Product not found or invalid amount.");
             }
-            if (product.Quantity < 0)
+        }
+        public void DecreaseStock(string productId, int amount)
+        {
+            var product = products.FirstOrDefault(p => p.ProductId == productId);
+            if (product != null && amount > 0 && product.Quantity >= amount)
             {
-                Console.WriteLine("Quantity cannot be negative.");
-                return false;
+                product.Quantity -= amount;
+                Console.WriteLine("Stock decreased successfully.");
             }
-            if (product.Price < 0.01m || product.Price > 10000.00m)
+            else
             {
-                Console.WriteLine("Price must be between $0.01 and $10000.00.");
-                return false;
+                Console.WriteLine("Product not found, invalid amount, or insufficient stock.");
             }
-            if (!Enum.IsDefined(typeof(Category), product.Category))
-            {
-                Console.WriteLine("Invalid Category.");
-                return false;
-            }
-            return true;
+        }
+        public decimal CalculateTotalInventoryValue()
+        {
+            return products.Sum(p => p.Price * p.Quantity);
         }
     }
 }
