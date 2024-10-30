@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InventoryManagementSystem
 {
@@ -47,7 +45,7 @@ namespace InventoryManagementSystem
                     default:
                         Console.WriteLine("Invalid option. Please try again.");
                         break;
-                        
+
                 }
             }
         }
@@ -59,7 +57,7 @@ namespace InventoryManagementSystem
             Console.WriteLine($"Total Inventory Value: {inventoryManager.CalculateTotalInventoryValue():C}");
             Console.Write("Enter product ID to view details or 'M' for menu: ");
             String input = Console.ReadLine();
-            if (input.ToUpper( )== "M")
+            if (input.ToUpper() == "M")
             {
                 return;
             }
@@ -134,7 +132,7 @@ namespace InventoryManagementSystem
             {
                 case 1:
                     Console.Write("Enter Category (Electronics, Clothing, Food, Books): ");
-                    Category category = (Category) Enum.Parse(typeof(Category), Console.ReadLine());
+                    Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine());
                     inventoryReporter.FilterByCategory(category);
                     break;
                 case 2:
